@@ -81,8 +81,13 @@
             <div class="col-md-7 d-flex align-items-center justify-content-center"> <!-- 60% de l'écran -->
                 <div class="form-container">
                     <h2 class="text-center mb-4">Connexion</h2>
-                    <form>
+                    <form method="POST" action="{{route('handleLogin')}}">
+                        @csrf
+                        @method('POST')
                         <div class="mb-3">
+                            @if (Session::get('error_msg'))
+                                <b>{{ Session::get('error_msg') }}</b>
+                            @endif
                             <label for="exampleInputEmail1" class="form-label">Adresse email</label>
                             <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
                             <div id="emailHelp" class="form-text">Nous ne partagerons jamais votre email avec quelqu'un d'autre.</div>

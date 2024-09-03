@@ -86,15 +86,18 @@
                         @method('POST')
                         <div class="mb-3">
                             @if (Session::get('error_msg'))
-                                <b>{{ Session::get('error_msg') }}</b>
+                              <div class="alert alert-danger">
+                                    {{ Session::get('error_msg') }}
+                               </div>
                             @endif
+
                             <label for="exampleInputEmail1" class="form-label">Adresse email</label>
-                            <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+                            <input type="email" class="form-control" name="email" id="exampleInputEmail1" aria-describedby="emailHelp">
                             <div id="emailHelp" class="form-text">Nous ne partagerons jamais votre email avec quelqu'un d'autre.</div>
                         </div>
                         <div class="mb-3">
                             <label for="exampleInputPassword1" class="form-label">Mot de passe</label>
-                            <input type="password" class="form-control" id="exampleInputPassword1">
+                            <input type="password" class="form-control" name="password" id="exampleInputPassword1">
                         </div>
                         <div class="mb-3 form-check">
                             <input type="checkbox" class="form-check-input" id="exampleCheck1">

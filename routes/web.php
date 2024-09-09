@@ -2,7 +2,9 @@
 
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\AppController;
+use App\Http\Controllers\DepartementController;
 use App\Http\Controllers\EmployerController;
+use App\Models\Departement;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', [AuthController::class, 'login'])->name('login');
@@ -21,6 +23,28 @@ Route::group(['middleware' => 'auth'], function () {
     });
     Route::prefix('employers')->group(function(){
         Route::get('/edit/{employer}', [EmployerController::class, 'edit'])->name('employers.edit');
+    });
+
+});
+
+
+// Route département
+
+Route::group(['middleware' => 'auth'], function () {
+    Route::get('/dashboard', [AppController::class, 'index'])->name('dashboard');
+
+
+    Route::prefix('departements')->group(function(){
+        Route::get('/', [DepartementController::class, 'index'])->name('departements.index');
+    });
+    Route::prefix('departements')->group(function(){
+        Route::get('/create', [DepartementController::class, 'create'])->name('departements.create');
+    });
+    Route::prefix('departements')->group(function(){
+        Route::post('/create', [DepartementController::class, 'store'])->name('departements.store');
+    });
+    Route::prefix('departements')->group(function(){
+        Route::get('/edit/{departement}', [DepartementController::class, 'edit'])->name('departements.edit');
     });
 
 });

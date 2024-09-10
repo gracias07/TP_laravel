@@ -35,7 +35,11 @@
                                             <circle cx="8" cy="4.5" r="1" />
                                         </svg></span></label>
                                 <input type="text" class="form-control" id="setting-input-1" placeholder="Entrez le nom du département" name="name"
-                                    required>
+                                    required value="{{old('name')}}">
+
+                                    @error('name')
+                                        <div class="text-danger">{{ $message }}</div>
+                                    @enderror
                             </div>
 
 

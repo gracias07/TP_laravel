@@ -72,7 +72,7 @@
 
                                 @forelse ($departements as $departement)
                                     <tr>
-                                        <td class="cell">#</td>
+                                        <td class="cell">{{ $loop->iteration }}</td>
                                         <td class="cell"><span class="truncate">{{ $departement->name }}</span></td>
 
                                     </tr>
@@ -92,17 +92,7 @@
                 </div><!--//app-card-body-->
             </div><!--//app-card-->
             <nav class="app-pagination">
-                <ul class="pagination justify-content-center">
-                    <li class="page-item disabled">
-                        <a class="page-link" href="#" tabindex="-1" aria-disabled="true">Previous</a>
-                    </li>
-                    <li class="page-item active"><a class="page-link" href="#">1</a></li>
-                    <li class="page-item"><a class="page-link" href="#">2</a></li>
-                    <li class="page-item"><a class="page-link" href="#">3</a></li>
-                    <li class="page-item">
-                        <a class="page-link" href="#">Next</a>
-                    </li>
-                </ul>
+                {{ $departements->links() }}
             </nav><!--//app-pagination-->
 
         </div><!--//tab-pane-->

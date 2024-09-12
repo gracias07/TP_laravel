@@ -40,4 +40,34 @@ class DepartementController extends Controller
             return redirect()->route('departements.create')->withErrors('Erreur lors de l\'enregistrement du département');
         }
     }
+
+    public function update(saveDepartementRequest $request, $id)
+    {
+        // Mise à jour d'un département existant
+        try {
+            // Récupérer le département existant
+            $departement = Departement::findOrFail($id);
+            $departement->name = $request->name;
+            $departement->update(); // Utiliser save() pour appliquer les modifications
+
+            return redirect()->route('departements.index')->with('success_message', 'Département mis à jour');
+        } catch (Exception $e) {
+            // Gérer l'erreur de manière plus propre ici
+            return redirect()->route('departements.edit', $id)->withErrors('Erreur lors de la mise à jour du département');
+        }
+
+        /* Ajout du paramètre $id pour indiquer quel département mettre à jour.
+           Utilisation de findOrFail($id) pour récupérer le département de la base de données.
+           Utilisation de save() au lieu de update() pour enregistrer les modifications.*/
+    }
+
+    public function delete(Departement $departement)
+    {
+        try {
+            $departement->delete();
+            return redirect()->route('departements.index')->with('success_message', 'Département supprimé');
+        } catch (Exception $e) {
+            return redirect()->route('departements.index')->withErrors('Erreur lors de la suppression du département');
+        }
+    }
 }

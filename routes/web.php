@@ -46,5 +46,12 @@ Route::group(['middleware' => 'auth'], function () {
     Route::prefix('departements')->group(function(){
         Route::get('/edit/{departement}', [DepartementController::class, 'edit'])->name('departements.edit');
     });
+     Route::put('/update/{departement}', [DepartementController::class, 'update'])->name('departements.update');
+
+    //  Route::prefix('departements')->group(function(){
+    //     Route::get('/{departements}', [DepartementController::class, 'delete'])->name('departements.delete');
+    // });
+    Route::delete('/{departement}', [DepartementController::class, 'delete'])->name('departements.delete');
+
 
 });

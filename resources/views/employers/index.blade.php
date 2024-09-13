@@ -74,6 +74,9 @@
                                     <th class="cell">Prénom</th>
                                     <th class="cell">Email</th>
                                     <th class="cell">Contact</th>
+                                    <th class="cell">Departement</th>
+                                    <th class="cell">Montant journalier</th>
+
                                     <th class="cell"></th>
                                 </tr>
                             </thead>
@@ -82,6 +85,17 @@
                                 @forelse ($employers as $employer)
                                     <tr>
                                         {{-- <td class="cell" colspan="6">Aucun employé ajouté</td> --}}
+                                        <td class="cell">{{ $loop->iteration }}</td>
+                                        <td class="cell">{{ $employer->nom }}</td>
+                                        <td class="cell">{{ $employer->prenom }}</td>
+                                        <td class="cell">{{ $employer->email }}</td>
+                                        <td class="cell">{{ $employer->contact }}</td>
+                                        <td class="cell"></td>
+                                        <td class="cell">
+                                            <span class="badge bg-success">{{ $employer->montant_journalier * 31 }}
+                                                Euro</span>
+                                        </td>
+
 
                                     </tr>
                                 @empty

@@ -68,7 +68,7 @@
                         @enderror
                     </div>
 
-                    <button type="submit" class="btn btn-primary">Enregistrer</button>
+                    <button type="submit" class="btn app-btn-primary">Enregistrer</button>
                 </form>
 
                     </div><!--//app-card-body-->

@@ -4,9 +4,15 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use App\Models\Departement;
+
 
 class Employer extends Model
 {
     use HasFactory;
-    protected $guarded = [''];
+      protected $fillable = ['nom', 'prenom', 'email', 'contact', 'departement_id', 'montant_journalier'];
+
+    public function departement(){
+        return $this->belongsTo(Departement::class);
+    }
 }

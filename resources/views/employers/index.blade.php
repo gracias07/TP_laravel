@@ -75,7 +75,7 @@
                                     <th class="cell">Email</th>
                                     <th class="cell">Contact</th>
                                     <th class="cell">Departement</th>
-                                    <th class="cell">Montant journalier</th>
+                                    <th class="cell">Salaire</th>
 
                                     <th class="cell"></th>
                                 </tr>
@@ -90,7 +90,7 @@
                                         <td class="cell">{{ $employer->prenom }}</td>
                                         <td class="cell">{{ $employer->email }}</td>
                                         <td class="cell">{{ $employer->contact }}</td>
-                                        <td class="cell"></td>
+                                        <td class="cell">{{ $employer->departement->nom }}</td>
                                         <td class="cell">
                                             <span class="badge bg-success">{{ $employer->montant_journalier * 31 }}
                                                 Euro</span>
@@ -114,17 +114,7 @@
                 </div><!--//app-card-body-->
             </div><!--//app-card-->
             <nav class="app-pagination">
-                <ul class="pagination justify-content-center">
-                    <li class="page-item disabled">
-                        <a class="page-link" href="#" tabindex="-1" aria-disabled="true">Previous</a>
-                    </li>
-                    <li class="page-item active"><a class="page-link" href="#">1</a></li>
-                    <li class="page-item"><a class="page-link" href="#">2</a></li>
-                    <li class="page-item"><a class="page-link" href="#">3</a></li>
-                    <li class="page-item">
-                        <a class="page-link" href="#">Next</a>
-                    </li>
-                </ul>
+                {{ $employers->links() }}
             </nav><!--//app-pagination-->
 
         </div><!--//tab-pane-->

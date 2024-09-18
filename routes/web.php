@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\AppController;
+use App\Http\Controllers\ConfigurationController;
 use App\Http\Controllers\DepartementController;
 use App\Http\Controllers\EmployerController;
 use App\Models\Departement;
@@ -20,6 +21,8 @@ Route::group(['middleware' => 'auth'], function () {
         Route::get('/create', [EmployerController::class, 'create'])->name('employers.create');
         Route::get('/edit/{employer}', [EmployerController::class, 'edit'])->name('employers.edit');
         Route::post('/store', [EmployerController::class, 'store'])->name('employers.store');
+        Route::put('/update/{employer}', [EmployerController::class, 'update'])->name('employers.update');
+        Route::delete('employers/delete/{id}', [EmployerController::class, 'delete'])->name('employers.delete');
     });
 
 });
@@ -51,4 +54,10 @@ Route::group(['middleware' => 'auth'], function () {
     Route::delete('/{departement}', [DepartementController::class, 'delete'])->name('departements.delete');
 
 
+});
+
+// Route pour la table configuration
+Route::prefix('configurations')->group(function(){
+    Route::get('/', [ConfigurationController::class, 'index'])->name('configurations');
+    Route::get('/create', [ConfigurationController::class, 'create'])->name(('configurations.create'));
 });

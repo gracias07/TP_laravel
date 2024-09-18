@@ -105,7 +105,7 @@
                 <ul class="app-menu footer-menu list-unstyled">
                     <li class="nav-item">
                         <!--//Bootstrap Icons: https://icons.getbootstrap.com/ -->
-                        <a class="nav-link" href="settings.html">
+                        <a class="nav-link" href="{{route('configurations')}}">
                             <span class="nav-icon">
                                 <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-gear"
                                     fill="currentColor" xmlns="http://www.w3.org/2000/svg">
@@ -115,7 +115,7 @@
                                         d="M8 5.754a2.246 2.246 0 1 0 0 4.492 2.246 2.246 0 0 0 0-4.492zM4.754 8a3.246 3.246 0 1 1 6.492 0 3.246 3.246 0 0 1-6.492 0z" />
                                 </svg>
                             </span>
-                            <span class="nav-link-text">Settings</span>
+                            <span class="nav-link-text">Configurations</span>
                         </a><!--//nav-link-->
                     </li><!--//nav-item-->
                     <!--//nav-item-->

@@ -48,6 +48,11 @@
         </div><!--//col-auto-->
     </div><!--//row-->
 
+    @if (Session::get('success_message'))
+          <div class="alert alert-success"> {{ Session::get('success_message') }}</div>
+
+    @endif
+
 
     <nav id="orders-table-tab" class="orders-table-tab app-nav-tabs nav shadow-sm flex-column flex-sm-row mb-4">
         <a class="flex-sm-fill text-sm-center nav-link active" id="orders-all-tab" data-bs-toggle="tab" href="#orders-all"
@@ -90,11 +95,24 @@
                                         <td class="cell">{{ $employer->prenom }}</td>
                                         <td class="cell">{{ $employer->email }}</td>
                                         <td class="cell">{{ $employer->contact }}</td>
-                                        <td class="cell">{{ $employer->departement->nom }}</td>
+                                        <td class="cell">{{ $employer->departement->name }}</td>
                                         <td class="cell">
                                             <span class="badge bg-success">{{ $employer->montant_journalier * 31 }}
                                                 Euro</span>
                                         </td>
+                                        <td class="cell">
+                                            <a href="{{ route('employers.edit', $employer->id) }}" class="btn-sm app-btn-secondary">Éditer</a>
+
+                                            <!-- Formulaire pour la suppression -->
+                                            <form action="{{ route('employers.delete', $employer->id) }}" method="POST" style="display:inline;">
+                                                @csrf
+                                                @method('DELETE')
+                                                <button type="submit" class="btn-sm app-btn-secondary" onclick="return confirm('Êtes-vous sûr de vouloir supprimer cet employé ?');">
+                                                    Supprimer
+                                                </button>
+                                            </form>
+                                        </td>
+
 
 
                                     </tr>

@@ -10,9 +10,15 @@ use App\Models\Departement;
 class Employer extends Model
 {
     use HasFactory;
-      protected $fillable = ['nom', 'prenom', 'email', 'contact', 'departement_id', 'montant_journalier'];
+    protected $guarded = [''];
 
-    public function departement(){
+    /**
+     * Get the user that owns the Employer
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function departement()
+    {
         return $this->belongsTo(Departement::class);
     }
 }

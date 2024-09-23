@@ -62,4 +62,5 @@ Route::prefix('configurations')->group(function(){
     Route::get('/create', [ConfigurationController::class, 'create'])->name(('configurations.create'));
     // Route d'action
     Route::post('/store', [ConfigurationController::class, 'store'])->name('configurations.store');
+    Route::delete('/{configuration}', [ConfigurationController::class, 'delete'])->name('configurations.delete');
 });

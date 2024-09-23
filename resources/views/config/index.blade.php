@@ -20,7 +20,7 @@
                         </form>
                     </div>
                     <div class="col-auto">
-                        <a class="btn app-btn-secondary" href="{{ route('configurations.create')}}">
+                        <a class="btn app-btn-secondary" href="{{ route('configurations.create') }}">
                             <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-download me-1"
                                 fill="currentColor" xmlns="http://www.w3.org/2000/svg">
                                 <path fill-rule="evenodd"
@@ -35,6 +35,14 @@
             </div>
         </div>
     </div>
+
+    <!-- Affichage du message de succès -->
+    @if (Session::has('success_message'))
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            {{ Session::get('success_message') }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    @endif
 
     <div class="tab-content" id="orders-table-tab-content">
         <div class="tab-pane fade show active" id="orders-all" role="tabpanel" aria-labelledby="orders-all-tab">
@@ -53,17 +61,39 @@
                                 @forelse ($allConfigurations as $config)
                                     <tr>
                                         <td class="cell">{{ $loop->iteration }}</td>
-                                        <td class="cell"><span class="truncate">{{ $config->type }}</span></td>
-                                        <td class="cell"><span class="truncate">{{ $config->value }}</span></td>
-                                        <td class="cell">
-                                            <a class="btn-sm app-btn-secondary" href="{{route('departements.edit', $config->id)}}">Editer</a>
+                                        <td class="cell"><span class="truncate">
 
-                                            <!-- Formulaire de suppression -->
-                                            <form action="{{ route('departements.delete', $config->id) }}" method="POST" style="display:inline;">
+                                                @if ($config->type === 'PAYMENT_DATE')
+                                                    Date mensuel de paiement
+                                                @endif
+
+                                                @if ($config->type === 'APP_NAME')
+                                                    Nom de l'application
+                                                @endif
+
+                                                @if ($config->type === 'DEVELOPPER_NAME')
+                                                    Equipe de développement
+                                                @endif
+
+                                            </span></td>
+                                        <td class="cell"><span class="truncate">{{ $config->value }}
+                                                @if ($config === 'PAYMENT_DATE')
+                                                    de chaque mois
+                                                @endif
+                                            </span></td>
+                                        <td class="cell">
+                                            {{-- <a class="btn-sm app-btn-secondary"
+                                                href="{{ route('departements.edit', $config->id) }}">Editer</a> --}}
+
+                                            {{-- Formulaire de suppression --}}
+                                            <form action="{{ route('configurations.delete', $config->id) }}" method="POST"
+                                                style="display:inline;">
                                                 @csrf
                                                 @method('DELETE')
-                                                <button type="submit" class="btn-sm app-btn-secondary" onclick="return confirm('Êtes-vous sûr de vouloir supprimer ce département ?')">Retirer</button>
+                                                <button type="submit" class="btn-sm app-btn-secondary"
+                                                    onclick="return confirm('Êtes-vous sûr de vouloir supprimer cette configuration ?')">Retirer</button>
                                             </form>
+
                                         </td>
                                     </tr>
                                 @empty

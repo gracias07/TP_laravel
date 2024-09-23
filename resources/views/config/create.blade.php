@@ -13,7 +13,7 @@
             <div class="app-card app-card-settings shadow-sm p-4" method="POST">
 
 
-                <form action="{{route('departements.store')}}" method="POST">
+                <form action="{{ route('configurations.store') }}" method="POST">
                     @csrf
                     @method('POST')
 
@@ -34,15 +34,22 @@
                                                 d="M8.93 6.588l-2.29.287-.082.38.45.083c.294.07.352.176.288.469l-.738 3.468c-.194.897.105 1.319.808 1.319.545 0 1.178-.252 1.465-.598l.088-.416c-.2.176-.492.246-.686.246-.275 0-.375-.193-.304-.533L8.93 6.588z" />
                                             <circle cx="8" cy="4.5" r="1" />
                                         </svg></span></label>
-                                        <select name="" id="" class="form-control"></select>
+                                <select name="type" id="type" class="form-control">
 
-                                    @error('name')
-                                        <div class="text-danger">{{ $message }}</div>
-                                    @enderror
+                                    <option value=""></option>
+                                    <option value="PAYMENT_DATE">Date de paiement</option>
+                                    <option value="APP_NAME">Nom de l'application</option>
+                                    <option value="DEVELOPPER_NAME">Equipe de développement</option>
+                                    <option value="ANOTHER">Autres option</option>
+                                </select>
+
+                                @error('type')
+                                    <div class="text-danger">{{ $message }}</div>
+                                @enderror
                             </div>
 
                             <div class="mb-3">
-                                <label for="setting-input-1" class="form-label">Nom<span class="ms-2"
+                                <label for="setting-input-1" class="form-label">Valeur<span class="ms-2"
                                         data-container="body" data-bs-toggle="popover" data-trigger="hover"
                                         data-placement="top"
                                         data-content="This is a Bootstrap popover example. You can use popover to provide extra info."><svg
@@ -54,12 +61,13 @@
                                                 d="M8.93 6.588l-2.29.287-.082.38.45.083c.294.07.352.176.288.469l-.738 3.468c-.194.897.105 1.319.808 1.319.545 0 1.178-.252 1.465-.598l.088-.416c-.2.176-.492.246-.686.246-.275 0-.375-.193-.304-.533L8.93 6.588z" />
                                             <circle cx="8" cy="4.5" r="1" />
                                         </svg></span></label>
-                                <input type="text" class="form-control" id="setting-input-1" placeholder="Entrez le nom de la configuration" name="name"
-                                    required value="{{old('name')}}">
+                                <input type="text" class="form-control" id="setting-input-1"
+                                    placeholder="Entrez la valeur" name="value" required
+                                    value="{{ old('value') }}">
 
-                                    @error('name')
-                                        <div class="text-danger">{{ $message }}</div>
-                                    @enderror
+                                @error('value')
+                                    <div class="text-danger">{{ $message }}</div>
+                                @enderror
                             </div>
 
 

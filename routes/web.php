@@ -60,4 +60,6 @@ Route::group(['middleware' => 'auth'], function () {
 Route::prefix('configurations')->group(function(){
     Route::get('/', [ConfigurationController::class, 'index'])->name('configurations');
     Route::get('/create', [ConfigurationController::class, 'create'])->name(('configurations.create'));
+    // Route d'action
+    Route::post('/store', [ConfigurationController::class, 'store'])->name('configurations.store');
 });

@@ -76,11 +76,12 @@
                                                 @endif
 
                                             </span></td>
-                                        <td class="cell"><span class="truncate">{{ $config->value }}
-                                                @if ($config === 'PAYMENT_DATE')
+                                            <td class="cell"><span class="truncate">{{ $config->value }}
+                                                @if ($config->type === 'PAYMENT_DATE')
                                                     de chaque mois
                                                 @endif
                                             </span></td>
+
                                         <td class="cell">
                                             {{-- <a class="btn-sm app-btn-secondary"
                                                 href="{{ route('departements.edit', $config->id) }}">Editer</a> --}}

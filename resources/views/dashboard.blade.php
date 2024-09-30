@@ -2,6 +2,12 @@
 
 @section('content')
     <h1 class="app-page-title">Dashboard</h1>
+
+    <div class="row mt-2 mb-2">
+        @if ($paymentNotification)
+            <div class="alert alert-warning"><b>Attention :</b> {{ $paymentNotification }}</div>
+        @endif
+    </div>
     <!--//app-card-->
 
     <div class="row g-4 mb-4">
@@ -48,5 +54,5 @@
             </div><!--//app-card-->
         </div><!--//col-->
     </div><!--//row-->
-    
+
 @endsection

@@ -75,6 +75,10 @@
                                                     Equipe de développement
                                                 @endif
 
+                                                @if ($config->type === 'ANOTHER')
+                                                    Autres options
+                                                @endif
+
                                             </span></td>
                                             <td class="cell"><span class="truncate">{{ $config->value }}
                                                 @if ($config->type === 'PAYMENT_DATE')

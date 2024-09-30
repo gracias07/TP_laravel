@@ -118,16 +118,39 @@
                     </a>
                 </div><!--//app-utility-item-->
 
-                <div class="app-utility-item app-user-dropdown dropdown">
+                {{-- <div class="app-utility-item app-user-dropdown dropdown">
                     <a class="dropdown-toggle" id="user-dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-expanded="false">
-                        <img src="https://ui-avatars.com/api/?name={{auth()->user()->name}}" alt="user profile" style="border-radius: 50%"></a>
-                    <ul class="dropdown-menu" aria-labelledby="user-dropdown-toggle">
+                        @if(auth()->check())
+                        <a class="dropdown-toggle" id="user-dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-expanded="false">
+                            <img src="https://ui-avatars.com/api/?name={{ auth()->user()->name }}" alt="user profile" style="border-radius: 50%">
+                        </a>                    <ul class="dropdown-menu" aria-labelledby="user-dropdown-toggle">
                         <li><a class="dropdown-item" href="account.html">Account</a></li>
                         <li><a class="dropdown-item" href="settings.html">Settings</a></li>
                         <li><hr class="dropdown-divider"></li>
                         <li><a class="dropdown-item" href="login.html">Log Out</a></li>
                     </ul>
-                </div><!--//app-user-dropdown-->
+                </div>
+
+                <!--//app-user-dropdown--> --}}
+                <div class="app-utility-item app-user-dropdown dropdown">
+                    @if(auth()->check())
+                        <a class="dropdown-toggle" id="user-dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-expanded="false">
+                            <img src="https://ui-avatars.com/api/?name={{ auth()->user()->name }}" alt="user profile" style="border-radius: 50%">
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="user-dropdown-toggle">
+                            <li><a class="dropdown-item" href="account.html">Account</a></li>
+                            <li><a class="dropdown-item" href="settings.html">Settings</a></li>
+                            <li><hr class="dropdown-divider"></li>
+                            <li><a class="dropdown-item" href="login.html">Log Out</a></li>
+                        </ul>
+                    @else
+                        <!-- Si l'utilisateur n'est pas connecté, on peut afficher un avatar ou un lien vers la connexion -->
+                        <a class="dropdown-toggle" href="{{ route('login') }}">
+                            <img src="path/to/default-avatar.png" alt="guest avatar" style="border-radius: 50%">
+                        </a>
+                    @endif
+                </div>
+
             </div><!--//app-utilities-->
         </div><!--//row-->
         </div><!--//app-header-content-->

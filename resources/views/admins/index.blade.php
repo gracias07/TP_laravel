@@ -4,7 +4,7 @@
 @section('content')
     <div class="row g-3 mb-4 align-items-center justify-content-between">
         <div class="col-auto">
-            <h1 class="app-page-title mb-0">Employers</h1>
+            <h1 class="app-page-title mb-0">Administrateurs</h1>
         </div>
         <div class="col-auto">
             <div class="page-utilities">
@@ -32,7 +32,7 @@
                         </select>
                     </div>
                     <div class="col-auto">
-                        <a class="btn app-btn-secondary" href="{{ route('employers.create') }}">
+                        <a class="btn app-btn-secondary" href="{{ route('administrateurs.create') }}">
                             <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-download me-1"
                                 fill="currentColor" xmlns="http://www.w3.org/2000/svg">
                                 <path fill-rule="evenodd"
@@ -40,7 +40,7 @@
                                 <path fill-rule="evenodd"
                                     d="M7.646 11.854a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 10.293V1.5a.5.5 0 0 0-1 0v8.793L5.354 8.146a.5.5 0 1 0-.708.708l3 3z" />
                             </svg>
-                            Ajoutez un employé
+                            Ajoutez un administrateur
                         </a>
                     </div>
                 </div><!--//row-->
@@ -56,7 +56,7 @@
 
     <nav id="orders-table-tab" class="orders-table-tab app-nav-tabs nav shadow-sm flex-column flex-sm-row mb-4">
         <a class="flex-sm-fill text-sm-center nav-link active" id="orders-all-tab" data-bs-toggle="tab" href="#orders-all"
-            role="tab" aria-controls="orders-all" aria-selected="true">Tout les employers</a>
+            role="tab" aria-controls="orders-all" aria-selected="true">Tout les administrateurs</a>
         <a class="flex-sm-fill text-sm-center nav-link" id="orders-paid-tab" data-bs-toggle="tab" href="#orders-paid"
             role="tab" aria-controls="orders-paid" aria-selected="false">Paid</a>
         <a class="flex-sm-fill text-sm-center nav-link" id="orders-pending-tab" data-bs-toggle="tab" href="#orders-pending"
@@ -87,24 +87,24 @@
                             </thead>
                             <tbody>
 
-                                @forelse ($employers as $employer)
+                                @forelse ($admins as $admin)
                                     <tr>
                                         {{-- <td class="cell" colspan="6">Aucun employé ajouté</td> --}}
-                                        <td class="cell">{{ $loop->iteration }}</td>
-                                        <td class="cell">{{ $employer->nom }}</td>
-                                        <td class="cell">{{ $employer->prenom }}</td>
-                                        <td class="cell">{{ $employer->email }}</td>
-                                        <td class="cell">{{ $employer->contact }}</td>
-                                        <td class="cell">{{ $employer->departement->name }}</td>
+                                        {{-- <td class="cell">{{ $loop->iteration }}</td>
+                                        <td class="cell">{{ $admin->nom }}</td>
+                                        <td class="cell">{{ $admin->prenom }}</td>
+                                        <td class="cell">{{ $admin->email }}</td>
+                                        <td class="cell">{{ $admin->contact }}</td>
+                                        <td class="cell">{{ $admin->departement->name }}</td>
                                         <td class="cell">
                                             <span class="badge bg-success">{{ $employer->montant_journalier * 31 }}
                                                 Euro</span>
-                                        </td>
+                                        </td> --}}
                                         <td class="cell">
-                                            <a href="{{ route('employers.edit', $employer->id) }}" class="btn-sm app-btn-secondary">Éditer</a>
+                                            <a href="{{ route('administrateurs.edit', $admin->id) }}" class="btn-sm app-btn-secondary">Éditer</a>
 
                                             <!-- Formulaire pour la suppression -->
-                                            <form action="{{ route('employers.delete', $employer->id) }}" method="POST" style="display:inline;">
+                                            <form action="{{ route('administrateurs.delete', $admin->id) }}" method="POST" style="display:inline;">
                                                 @csrf
                                                 @method('DELETE')
                                                 <button type="submit" class="btn-sm app-btn-secondary" onclick="return confirm('Êtes-vous sûr de vouloir supprimer cet employé ?');">
@@ -118,7 +118,7 @@
                                     </tr>
                                 @empty
                                     <tr>
-                                        <td class="cell" colspan="6">Aucun employé ajouté</td>
+                                        <td class="cell" colspan="6">Aucun administrateurs ajouté</td>
 
                                     </tr>
                                 @endforelse
@@ -132,7 +132,7 @@
                 </div><!--//app-card-body-->
             </div><!--//app-card-->
             <nav class="app-pagination">
-                {{ $employers->links() }}
+                {{ $admins->links() }}
             </nav><!--//app-pagination-->
 
         </div><!--//tab-pane-->

@@ -14,9 +14,13 @@ class SendEmailToAdminAfterRegistrationNotification extends Notification
     /**
      * Create a new notification instance.
      */
-    public function __construct()
+    public $code;
+    public $email;
+    public function __construct($codeToSend, $SendToemail)
     {
         //
+        $this->code = $codeToSend;
+        $this->email = $SendToemail;
     }
 
     /**
@@ -35,9 +39,13 @@ class SendEmailToAdminAfterRegistrationNotification extends Notification
     public function toMail(object $notifiable): MailMessage
     {
         return (new MailMessage)
-                    ->line('The introduction to the notification.')
-                    ->action('Notification Action', url('/'))
-                    ->line('Thank you for using our application!');
+        ->subject('Création de compte administrateur')
+                    ->line('Bonjour.')
+                    ->line('Votre compte à été crée avec succès sur la plateforme de gestion de salaire et des employés.')
+                    ->line('Saisissez le code ' .$this->code. 'et renseigner dans le champ du formulaire qui apparaitra')
+                    ->line('Cliquez ci-dessous pour valider votre compte')
+                    ->action('Cliquez ici', url('/validate-account/' . '/' . $this->email))
+                    ->line('Merci d\'utiliser nos services');
     }
 
     /**

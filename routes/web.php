@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AdminController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\AppController;
 use App\Http\Controllers\ConfigurationController;
@@ -16,7 +17,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/dashboard', [AppController::class, 'index'])->name('dashboard');
 
 
-    Route::prefix('employers')->group(function(){
+    Route::prefix('employers')->group(function () {
         Route::get('/', [EmployerController::class, 'index'])->name('employers.index');
         Route::get('/create', [EmployerController::class, 'create'])->name('employers.create');
         Route::get('/edit/{employer}', [EmployerController::class, 'edit'])->name('employers.edit');
@@ -24,7 +25,6 @@ Route::group(['middleware' => 'auth'], function () {
         Route::put('/update/{employer}', [EmployerController::class, 'update'])->name('employers.update');
         Route::delete('employers/delete/{id}', [EmployerController::class, 'delete'])->name('employers.delete');
     });
-
 });
 
 
@@ -34,33 +34,46 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/dashboard', [AppController::class, 'index'])->name('dashboard');
 
 
-    Route::prefix('departements')->group(function(){
+    Route::prefix('departements')->group(function () {
         Route::get('/', [DepartementController::class, 'index'])->name('departements.index');
     });
-    Route::prefix('departements')->group(function(){
+    Route::prefix('departements')->group(function () {
         Route::get('/create', [DepartementController::class, 'create'])->name('departements.create');
     });
-    Route::prefix('departements')->group(function(){
+    Route::prefix('departements')->group(function () {
         Route::post('/create', [DepartementController::class, 'store'])->name('departements.store');
     });
-    Route::prefix('departements')->group(function(){
+    Route::prefix('departements')->group(function () {
         Route::get('/edit/{departement}', [DepartementController::class, 'edit'])->name('departements.edit');
     });
-     Route::put('/update/{departement}', [DepartementController::class, 'update'])->name('departements.update');
+    Route::put('/update/{departement}', [DepartementController::class, 'update'])->name('departements.update');
 
     //  Route::prefix('departements')->group(function(){
     //     Route::get('/{departements}', [DepartementController::class, 'delete'])->name('departements.delete');
     // });
     Route::delete('/{departement}', [DepartementController::class, 'delete'])->name('departements.delete');
-
-
 });
 
 // Route pour la table configuration
-Route::prefix('configurations')->group(function(){
+Route::prefix('configurations')->group(function () {
     Route::get('/', [ConfigurationController::class, 'index'])->name('configurations');
     Route::get('/create', [ConfigurationController::class, 'create'])->name(('configurations.create'));
     // Route d'action
     Route::post('/store', [ConfigurationController::class, 'store'])->name('configurations.store');
     Route::delete('/{configuration}', [ConfigurationController::class, 'delete'])->name('configurations.delete');
+});
+
+// pour l'administrateur
+Route::prefix('administrateurs')->group(function () {
+    Route::get('/', [AdminController::class, 'index'])->name('administrateurs');
+
+    Route::get('/create', [AdminController::class, 'create'])->name('administrateurs.create');
+
+    Route::post('/create', [AdminController::class, 'store'])->name('administrateurs.store');
+
+    Route::get('/edit/{administrateur}', [AdminController::class, 'edit'])->name('administrateurs.edit');
+
+    Route::put('/edit/{administrateur}', [AdminController::class, 'update'])->name('administrateurs.update');
+
+    Route::delete('/delete/{administrateur}', [AdminController::class, 'delete'])->name('administrateurs.delete');
 });

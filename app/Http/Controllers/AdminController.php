@@ -18,56 +18,57 @@ class AdminController extends Controller
     public function index(){
         //$admins = User::where('role', 'admin')->get();
         $admins = User::paginate(10);
-        return view('admin.index', compact('admins'));
+        return view('admins.index', compact('admins'));
     }
     public function create()
     {
-        return view('admin.create');
+        return view('admins.create');
     }
 
     public function edit(User $user)
     {
-        return view('admin.edit', compact('user'));
+        return view('admins.edit', compact('user'));
     }
     // Enregistrement d'un administrateur dans la BDD et envoie de mail
     public function store(storeAdminRequest $request)
     {
         try {
-            // logique de la création du compte
+            // Logique pour créer l'utilisateur
             $user = new User();
-
             $user->name = $request->name;
             $user->email = $request->email;
             $user->password = Hash::make('default');
             $user->save();
 
-            // Envoyer un email pour que l'administrateur puisse confirmer son compte
-            // Envoi de code par email pour vérification
-            // ...
-
             if ($user) {
                 try {
+                    // Supprimer tout code précédent
                     ResetCodePassword::where('email', $user->email)->delete();
-                    $code  = rand(1000, 4000);
 
-                    $data = [
+                    // Générer un code
+                    $code  = rand(1000, 9999);
+
+                    // Enregistrer le code de réinitialisation
+                    ResetCodePassword::create([
                         'code' => $code,
                         'email' => $user->email
-                    ];
+                    ]);
 
-                    ResetCodePassword::create($data);
-                    Notification::route('mail', $user->email)->notify(new SendEmailToAdminAfterRegistrationNotification($code, $user->email));
+                    // Envoyer la notification par e-mail
+                    Notification::route('mail', $user->email)
+                        ->notify(new SendEmailToAdminAfterRegistrationNotification($code, $user->email));
 
-                    // rediriger l'administrateur vers un Url
+                    // Rediriger avec succès
+                    return redirect()->route('administrateurs')->with('success_message', 'Administrateur ajouté avec succès');
                 } catch (Exception $e) {
-                    throw new ('une erreur est survenue lors de de l\'envoi du mail');
+                    return redirect()->back()->with('error', 'Erreur lors de l\'envoi de l\'email : ' . $e->getMessage());
                 }
             }
-            //return redirect()->route('admin.login')->with('success', 'Votre compte a été créé avec succès');
         } catch (Exception $e) {
-            return redirect()->back()->with('error', 'Erreur lors de l\'enregistrement');
+            return redirect()->back()->with('error', 'Erreur lors de l\'enregistrement : ' . $e->getMessage());
         }
     }
+
 
     public function update(updateAdminRequest $request, User $user)
     {

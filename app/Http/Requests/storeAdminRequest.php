@@ -24,8 +24,7 @@ class storeAdminRequest extends FormRequest
         return [
             //
             'name' => 'required|string',
-            'email' => 'required|unique:email,users',
-            'password' => 'required|string',
+            'email' => 'required|email|unique:users,email',
 
         ];
     }
@@ -36,7 +35,6 @@ class storeAdminRequest extends FormRequest
             'email.required' => 'L\'email est requis',
             'email.email' => 'L\'email n\'est pas valide',
             'email.unique' => 'L\'email existe déjà',
-            'password.required' => 'Mot de passe requis',
             ];
     }
 }

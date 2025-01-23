@@ -34,8 +34,6 @@ class SendEmailToAdminAfterRegistrationNotification extends Notification
             ->action('Valider votre compte', url('/validate-account/' . $this->email))
             ->line('Merci d\'utiliser nos services !');
     }
-}
-
     /**
      * Get the array representation of the notification.
      *

@@ -76,11 +76,11 @@
                                 <tr>
                                     <th class="cell">#</th>
                                     <th class="cell">Nom</th>
-                                    <th class="cell">Prénom</th>
+                                    {{-- <th class="cell">Prénom</th> --}}
                                     <th class="cell">Email</th>
-                                    <th class="cell">Contact</th>
-                                    <th class="cell">Departement</th>
-                                    <th class="cell">Salaire</th>
+                                    <th class="cell">Action</th>
+                                    {{-- <th class="cell">Departement</th>
+                                    <th class="cell">Salaire</th> --}}
 
                                     <th class="cell"></th>
                                 </tr>
@@ -90,14 +90,13 @@
                                 @forelse ($admins as $admin)
                                     <tr>
                                         {{-- <td class="cell" colspan="6">Aucun employé ajouté</td> --}}
-                                        {{-- <td class="cell">{{ $loop->iteration }}</td>
-                                        <td class="cell">{{ $admin->nom }}</td>
-                                        <td class="cell">{{ $admin->prenom }}</td>
+                                        <td class="cell">{{ $loop->iteration }}</td>
+                                        <td class="cell">{{ $admin->name }}</td>
                                         <td class="cell">{{ $admin->email }}</td>
-                                        <td class="cell">{{ $admin->contact }}</td>
-                                        <td class="cell">{{ $admin->departement->name }}</td>
-                                        <td class="cell">
-                                            <span class="badge bg-success">{{ $employer->montant_journalier * 31 }}
+                                        {{-- <td class="cell">{{ $admin->contact }}</td> --}}
+                                        {{-- <td class="cell">{{ $admin->departement->name }}</td> --}}
+                                        {{-- <td class="cell">
+                                            <span class="badge bg-success">{{ $admin->montant_journalier * 31 }}
                                                 Euro</span>
                                         </td> --}}
                                         <td class="cell">

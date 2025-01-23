@@ -2,89 +2,98 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\storeAdminRequest;
-use App\Http\Requests\updateAdminRequest;
-use App\Models\ResetCodePassword;
-use Illuminate\Http\Request;
+use App\Http\Requests\StoreAdminRequest;
+use App\Http\Requests\UpdateAdminRequest;
 use App\Models\User;
-use App\Notifications\SendEmailToAdminAfterRegistrationNotification;
+use App\Notifications\AdminRegisteredNotification;
 use Exception;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Notification;
 
 class AdminController extends Controller
 {
-    //
-    public function index(){
-        //$admins = User::where('role', 'admin')->get();
-        $admins = User::paginate(10);
+    /**
+     * Affiche la liste des administrateurs.
+     */
+    public function index()
+    {
+        $admins = User::where('role', 'admin')->paginate(10);
         return view('admins.index', compact('admins'));
     }
+
+    /**
+     * Affiche le formulaire de création d'un administrateur.
+     */
     public function create()
     {
         return view('admins.create');
     }
 
+    /**
+     * Affiche le formulaire d'édition pour un administrateur spécifique.
+     */
     public function edit(User $user)
     {
         return view('admins.edit', compact('user'));
     }
-    // Enregistrement d'un administrateur dans la BDD et envoie de mail
-    public function store(storeAdminRequest $request)
+
+    /**
+     * Enregistre un nouvel administrateur dans la base de données
+     * et envoie des notifications par e-mail.
+     */
+    public function store(StoreAdminRequest $request)
     {
         try {
-            // Logique pour créer l'utilisateur
-            $user = new User();
-            $user->name = $request->name;
-            $user->email = $request->email;
-            $user->password = Hash::make('default');
-            $user->save();
+            // Création de l'utilisateur
+            $user = User::create([
+                'name' => $request->name,
+                'email' => $request->email,
+                'password' => Hash::make('default'),
+            ]);
 
-            if ($user) {
-                try {
-                    // Supprimer tout code précédent
-                    ResetCodePassword::where('email', $user->email)->delete();
+            // Envoi de la notification de confirmation à l'administrateur
+            $user->notify(new AdminRegisteredNotification($user));
 
-                    // Générer un code
-                    $code  = rand(1000, 9999);
-
-                    // Enregistrer le code de réinitialisation
-                    ResetCodePassword::create([
-                        'code' => $code,
-                        'email' => $user->email
-                    ]);
-
-                    // Envoyer la notification par e-mail
-                    Notification::route('mail', $user->email)
-                        ->notify(new SendEmailToAdminAfterRegistrationNotification($code, $user->email));
-
-                    // Rediriger avec succès
-                    return redirect()->route('administrateurs')->with('success_message', 'Administrateur ajouté avec succès');
-                } catch (Exception $e) {
-                    return redirect()->back()->with('error', 'Erreur lors de l\'envoi de l\'email : ' . $e->getMessage());
-                }
-            }
+            return redirect()->route('administrateurs')
+                ->with('success_message', 'Administrateur ajouté avec succès');
         } catch (Exception $e) {
-            return redirect()->back()->with('error', 'Erreur lors de l\'enregistrement : ' . $e->getMessage());
+            return redirect()->back()
+                ->with('error', 'Erreur lors de l\'enregistrement ou de l\'envoi de l\'e-mail : ' . $e->getMessage());
         }
     }
 
-
-    public function update(updateAdminRequest $request, User $user)
+    /**
+     * Met à jour les informations d'un administrateur existant.
+     */
+    public function update(UpdateAdminRequest $request, User $user)
     {
         try {
-            // logique de la mise à jour du compte
+            $user->update([
+                'name' => $request->name,
+                'email' => $request->email,
+                // Ajoutez d'autres champs si nécessaire
+            ]);
+
+            return redirect()->route('administrateurs')
+                ->with('success_message', 'Administrateur mis à jour avec succès');
         } catch (Exception $e) {
-            return redirect()->back()->with('error', 'Erreur lors de la mise à jour');
+            return redirect()->back()
+                ->with('error', 'Erreur lors de la mise à jour : ' . $e->getMessage());
         }
     }
 
+    /**
+     * Supprime un administrateur existant.
+     */
     public function delete(User $user)
     {
         try {
-            // logique de la suppression du compte
+            $user->delete();
+            return redirect()->route('administrateurs')
+                ->with('success_message', 'Administrateur supprimé avec succès');
         } catch (Exception $e) {
-            return redirect()->back()->with('error', 'Erreur lors de la suppression');
+            return redirect()->back()
+                ->with('error', 'Erreur lors de la suppression : ' . $e->getMessage());
         }
     }
 }
